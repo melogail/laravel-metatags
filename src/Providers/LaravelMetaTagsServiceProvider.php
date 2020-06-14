@@ -8,8 +8,10 @@
 
 namespace Melogail\LaravelMetaTags\Providers;
 
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Melogail\LaravelMetaTags\MetaTagsBuilder;
+use Melogail\LaravelMetaTags\MetaTagsFacade;
 
 
 class LaravelMetaTagsServiceProvider extends ServiceProvider
@@ -21,9 +23,9 @@ class LaravelMetaTagsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('MetaTags', function(){
-            return new MetaTagsBuilder();
-        });
+        $this->app->bind('metatags', MetaTagsBuilder::class);
+        $loader = AliasLoader::getInstance();
+        $loader->alias('MetaTags', MetaTagsFacade::class);
     }
 
     /**

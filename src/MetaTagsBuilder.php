@@ -59,17 +59,15 @@ class MetaTagsBuilder
      * @return mixed
      * @throws \Exception
      */
-    public function input($value = null, array $options = null, $bootstrapped = false)
+    public function input($value = null, array $options = null)
     {
 
-        if ($bootstrapped == true) {
-            return '<div class="form-group">
-                            <label for="' . isset($options['id']) ? $options['id'] : $this->getName() . '">' .
-                            $this->getLabel() . '</label>'
-                            . Form::input('text', $this->getName(), $value, isset($options) ? $options: null) . '</div>';
+        $options_data = '';
+        foreach ($options as $option => $val) {
+            $options_data .= $option . '="' . $val . '"';
         }
 
-        return Form::input('text', $this->getName(), $value, isset($options) ? $options: null);
+        return '<input type="text" name="' . $this->getName() . '"' . $options_data .' value="' . $value . '">';
     }
 
 
