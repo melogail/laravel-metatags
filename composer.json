@@ -1,0 +1,28 @@
+{
+    "name": "melogail/laravel-metatags",
+    "description": "Laravel (5.* |  6.*) package for easily adding and generating HTML meta tags for different project pages",
+    "type": "library",
+    "require": {
+        "laravelcollective/html": ">= 5.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mohamed Elogail",
+            "email": "moh.elogail@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Melogail\\LaravelMetaTags\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Melogail\\LaravelMetaTags\\Providers\\LaravelMetaTagsServiceProvider"
+            ]
+        }
+    }
+}
