@@ -97,11 +97,49 @@ class MetaTag extends Model
      *
      * @param $query
      * @param $property
-     * @return mixed
+     * @return mixedex
      */
     public function scopeProperty($query, $property)
     {
         return $query->where('property', $property)->first();
     }
 
+
+    /**
+     * Update meta data
+     *
+     * @param $query
+     * @param object $model
+     * @param array $metaTags
+     * @return mixed
+     * @throws \Exception
+     */
+    public function scopeUpdateMetaTags($query, object $model, array $metaTags )
+    {
+        if (!is_object($model)) {
+            throw new \Exception('$model must be an object of model class, ' . gettype($metaTags) . ' is given!');
+        }
+
+        if (!is_array($metaTags)) {
+            throw new \Exception('$metaTags must be an array, ' . gettype($metaTags) . ' is given!');
+        }
+
+        // Create new metatags if not present
+        if (!$model->metaTags()->get()) {
+            return $query->createMany($metaTags);
+        }
+
+        // If there is meta tags
+        foreach ($metaTags as $metaTag) {
+            if (isset($metaTag['name'])) {
+                return $query->where(['name' => $metaTag['name'], 'model_type' => get_class($model)])->first()->update(['content' => $metaTag['content']]);
+
+            } elseif ($metaTag['property']) {
+                return $query->where(['property' => $metaTag['property'], 'model_type' => get_class($model)])->first()->update(['content' => $metaTag['content']]);
+
+            } else {
+                throw new \Exception('Data is now in proper format, Please revice your data!');
+            }
+        }
+    }
 }
