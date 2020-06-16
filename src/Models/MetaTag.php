@@ -79,4 +79,29 @@ class MetaTag extends Model
         return $query->get(['property', 'content']);
     }
 
+    /**
+     * Return specific name attribute for entity
+     *
+     * @param $query
+     * @param $name
+     * @return mixed
+     */
+    public function scopeName($query, $name)
+    {
+        return $query->where('name', $name)->first();
+    }
+
+
+    /**
+     * Return specific property attribute for entity
+     *
+     * @param $query
+     * @param $property
+     * @return mixed
+     */
+    public function scopeProperty($query, $property)
+    {
+        return $query->where('name', $property)->first();
+    }
+
 }
