@@ -52,10 +52,9 @@ class MetaTagsBuilder
 
     /**
      * Create form input field for adding meta tags input
-     *
+     s
      * @param null $value
      * @param array|null $options
-     * @param bool $bootstrapped
      * @return mixed
      * @throws \Exception
      */
