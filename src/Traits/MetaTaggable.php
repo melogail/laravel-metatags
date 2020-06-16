@@ -18,25 +18,4 @@ trait MetaTaggable
         return $this->morphMany(MetaTag::class, 'model');
     }
 
-    /**
-     * Return meta tags who has name attribute.
-     * ex: <meta name="keywords" content="laravel, meta tags">
-     *
-     * @return mixed
-     */
-    public function scopeName()
-    {
-        return $this->metaTags()->get(['name', 'content']);
-    }
-
-    /**
-     * Return meta tags which have property attribute
-     * ex: Open Graph -> <meta property="og:author" content="John Doe" >
-     *
-     * @return mixed
-     */
-    public function scopeProperty()
-    {
-        return $this->metaTags()->get(['property', 'content']);
-    }
 }

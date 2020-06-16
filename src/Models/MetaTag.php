@@ -55,4 +55,28 @@ class MetaTag extends Model
         return $this->morphTo();
     }
 
+    /**
+     * Return meta tags who has name attribute.
+     * ex: <meta name="keywords" content="laravel, meta tags">
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeHasName($query)
+    {
+        return $query->get(['name', 'content']);
+    }
+
+    /**
+     * Return meta tags which have property attribute
+     * ex: Open Graph -> <meta property="og:author" content="John Doe" >
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeHasProperty($query)
+    {
+        return $query->get(['property', 'content']);
+    }
+
 }
