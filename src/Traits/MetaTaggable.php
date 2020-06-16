@@ -24,7 +24,7 @@ trait MetaTaggable
      *
      * @return mixed
      */
-    public function name()
+    public function scopeName()
     {
         return $this->metaTags()->get(['name', 'content']);
     }
@@ -35,7 +35,7 @@ trait MetaTaggable
      *
      * @return mixed
      */
-    public function property()
+    public function scopeProperty()
     {
         return $this->metaTags()->get(['property', 'content']);
     }
