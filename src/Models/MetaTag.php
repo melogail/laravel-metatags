@@ -101,7 +101,7 @@ class MetaTag extends Model
      */
     public function scopeProperty($query, $property)
     {
-        return $query->where('name', $property)->first();
+        return $query->where('property', $property)->first();
     }
 
 }
