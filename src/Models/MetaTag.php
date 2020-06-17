@@ -8,7 +8,9 @@
 
 namespace Melogail\LaravelMetaTags\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class MetaTag extends Model
 {
@@ -64,7 +66,7 @@ class MetaTag extends Model
      */
     public function scopeHasName($query)
     {
-        return $query->get(['name', 'content']);
+        return $query->get(['name', 'content'])->count() > 0;
     }
 
     /**
@@ -76,7 +78,7 @@ class MetaTag extends Model
      */
     public function scopeHasProperty($query)
     {
-        return $query->get(['property', 'content']);
+        return $query->get(['property', 'content'])->count() > 0;
     }
 
     /**
@@ -125,21 +127,23 @@ class MetaTag extends Model
         }
 
         // Create new metatags if not present
-        if (!$model->metaTags()->get()) {
-            return $query->createMany($metaTags);
+        if ($model->metaTags()->get()->count() == 0 ) {
+            return $model->metaTags()->createMany($metaTags);
         }
 
         // If there is meta tags
         foreach ($metaTags as $metaTag) {
+
             if (isset($metaTag['name'])) {
-                return $query->where(['name' => $metaTag['name'], 'model_type' => get_class($model)])->first()->update(['content' => $metaTag['content']]);
+                DB::table('metatags')->where(['name' => $metaTag['name'], 'model_type' => get_class($model), 'model_id' => $model->id])->update(['content' => $metaTag['content']]);
 
             } elseif ($metaTag['property']) {
-                return $query->where(['property' => $metaTag['property'], 'model_type' => get_class($model)])->first()->update(['content' => $metaTag['content']]);
+                DB::table('metatags')->where(['name' => $metaTag['name'], 'model_type' => get_class($model), 'model_id' => $model->id])->update(['content' => $metaTag['content']]);
 
             } else {
                 throw new \Exception('Data is now in proper format, Please revice your data!');
             }
         }
     }
+
 }
