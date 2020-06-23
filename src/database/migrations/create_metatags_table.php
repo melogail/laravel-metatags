@@ -22,7 +22,7 @@ class CreateMetaTagsTable extends Migration
         Schema::create('metatags', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
-            $table->text('content');
+            $table->text('content')->nullable();
             $table->text('property')->nullable();
             $table->morphs('model');
             $table->timestamps();
